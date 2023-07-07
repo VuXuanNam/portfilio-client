@@ -1,52 +1,59 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import img1 from "../assets/images/project-img1.png";
 import img2 from "../assets/images/project-img2.png";
 import img3 from "../assets/images/project-img3.png";
 
 import "../styles.css";
 import ProjectCard from "./ProjectCard";
+import { getAll } from "../api/projects";
 
 function Projects() {
   const [durum, setDurum] = useState(1);
-
-  const projects = [
-    {
-      id: 1,
-      title: "Business Startup",
-      description: "Design & Development",
-      img: img1,
-    },
-    {
-      id: 2,
-      title: "Business Startup",
-      description: "Design & Development",
-      img: img2,
-    },
-    {
-      id: 3,
-      title: "Business Startup",
-      description: "Design & Development",
-      img: img3,
-    },
-    {
-      id: 4,
-      title: "Business Startup",
-      description: "Design & Development",
-      img: img2,
-    },
-    {
-      id: 5,
-      title: "Business Startup",
-      description: "Design & Development",
-      img: img3,
-    },
-    {
-      id: 6,
-      title: "Business Startup",
-      description: "Design & Development",
-      img: img1,
-    },
-  ];
+  const [data, setData] = useState([])
+  const fetchApi = async () => {
+    const res = await getAll()
+    setData(res)
+  }
+  useEffect(() => { fetchApi() }, [])
+  console.log(data);
+  // const projects = [
+  //   {
+  //     id: 1,
+  //     title: "Business Startup",
+  //     description: "Design & Development",
+  //     img: img1,
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Business Startup",
+  //     description: "Design & Development",
+  //     img: img2,
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Business Startup",
+  //     description: "Design & Development",
+  //     img: img3,
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "Business Startup",
+  //     description: "Design & Development",
+  //     img: img2,
+  //   },
+  //   {
+  //     id: 5,
+  //     title: "Business Startup",
+  //     description: "Design & Development",
+  //     img: img3,
+  //   },
+  //   {
+  //     id: 6,
+  //     title: "Business Startup",
+  //     description: "Design & Development",
+  //     img: img1,
+  //   },
+  // ];
 
   return (
     <>
@@ -61,32 +68,29 @@ function Projects() {
         <div className="flex justify-center items-center gap-4 mt-12 mb-2 ">
           <button
             onClick={() => setDurum(1)}
-            className={`font-bold text-[19px] border-2  bg-[#171717] rounded-[6px] p-[4px] ${
-              durum == 1 ? "bg-[linear-gradient(90deg,#b004b0,#38097a)]" : ""
-            }`}
+            className={`font-bold text-[19px] border-2  bg-[#171717] rounded-[6px] p-[4px] ${durum == 1 ? "bg-[linear-gradient(90deg,#b004b0,#38097a)]" : ""
+              }`}
           >
             Projects
           </button>
           <button
             onClick={() => setDurum(2)}
-            className={`font-bold text-[19px] border-2  bg-[#171717] rounded-[6px] p-[4px] ${
-              durum === 2 ? "bg-[linear-gradient(90deg,#b004b0,#38097a)]" : ""
-            }  `}
+            className={`font-bold text-[19px] border-2  bg-[#171717] rounded-[6px] p-[4px] ${durum === 2 ? "bg-[linear-gradient(90deg,#b004b0,#38097a)]" : ""
+              }  `}
           >
             Text-1
           </button>
           <button
             onClick={() => setDurum(3)}
-            className={`font-bold text-[19px] border-2  bg-[#171717] rounded-[6px] p-[4px]  ${
-              durum === 3 ? "bg-[linear-gradient(90deg,#b004b0,#38097a)]" : ""
-            }`}
+            className={`font-bold text-[19px] border-2  bg-[#171717] rounded-[6px] p-[4px]  ${durum === 3 ? "bg-[linear-gradient(90deg,#b004b0,#38097a)]" : ""
+              }`}
           >
             Text-2
           </button>
         </div>
         <div className="grid grid-cols-3 p-10 justify-center items-center gap-8 lg:grid-cols-2 tl:grid-cols-1  ">
           {durum === 1
-            ? projects.map((item, i) => <ProjectCard key={i} item={item} />)
+            ? data.map((item, i) => <ProjectCard key={i} item={item} />)
             : null}
         </div>
         {durum === 2 ? (
